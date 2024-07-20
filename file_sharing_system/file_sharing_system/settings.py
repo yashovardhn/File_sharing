@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-yh5_(nxj+2&5atgat#%hof!i-(=*5ctdpq_ga6ukdo_3*!bum+
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+AUTH_USER_MODEL = 'files.User'
 
 # Application definition
 

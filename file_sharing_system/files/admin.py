@@ -24,12 +24,13 @@ class CustomUserAdmin(DefaultUserAdmin):
     search_fields = ('username', 'email')
     ordering = ('username',)
 
-# Register the custom UserAdmin only if not already registered
+# Unregister the default User model admin if it's already registered
 try:
     site.unregister(User)
 except NotRegistered:
     pass
 
+# Register the custom UserAdmin
 site.register(User, CustomUserAdmin)
 site.register(File)
 site.register(EmailVerificationToken)

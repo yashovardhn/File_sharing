@@ -5,24 +5,21 @@ import os
 from django.contrib.auth.models import User
 
 class User(AbstractUser):
-    
     USER_TYPE_CHOICES = (
         ('ops', 'Operation User'),
         ('client', 'Client User'),
     )
     user_type = models.CharField(max_length=10, choices=USER_TYPE_CHOICES)
-    
-    # Add related_name attributes to avoid conflicts
     groups = models.ManyToManyField(
         Group,
-        related_name='files_users',  # Change related_name to avoid conflict
+        related_name='files_users',
         blank=True,
         help_text='The groups this user belongs to.',
         verbose_name='groups',
     )
     user_permissions = models.ManyToManyField(
         Permission,
-        related_name='files_users_permissions',  # Change related_name to avoid conflict
+        related_name='files_users_permissions',
         blank=True,
         help_text='Specific permissions for this user.',
         verbose_name='user permissions',
