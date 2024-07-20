@@ -2,10 +2,12 @@ from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.db import models
 from django.utils import timezone
 import os
+from django.contrib.auth.models import User
 
 class User(AbstractUser):
+    
     USER_TYPE_CHOICES = (
-        ('ops', 'Operations User'),
+        ('ops', 'Operation User'),
         ('client', 'Client User'),
     )
     user_type = models.CharField(max_length=10, choices=USER_TYPE_CHOICES)
