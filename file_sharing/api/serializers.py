@@ -5,12 +5,12 @@ from .models import User, File
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'password', 'email', 'user_type')
-        extra_kwargs = {'password': {'write_only': True}}
+        fields = ['username', 'password', 'email']
 
-    def create(self, validated_data):
-        user = User.objects.create_user(**validated_data)
-        return user
+    def validate_username(self, value):
+        if User.objects.filter(username=value).exists():
+            raise serializers.ValidationError("A user with that username already exists.")
+        return value
 
 class FileSerializer(serializers.ModelSerializer):
     class Meta:
