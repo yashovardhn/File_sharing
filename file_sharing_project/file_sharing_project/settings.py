@@ -50,8 +50,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-AUTH_USER_MODEL = 'file_sharing_app.CustomUser'
+# AUTH_USER_MODEL = 'file_sharing_app.CustomUser'
+# # ROOT_URLCONF = 'file_sharing_project.urls'
+# # AUTH_USER_MODEL = 'myapp.CustomUser'
 ROOT_URLCONF = 'file_sharing_project.urls'
+
 
 TEMPLATES = [
     {

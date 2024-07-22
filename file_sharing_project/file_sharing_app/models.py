@@ -1,21 +1,26 @@
+from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.db import models
-from django.contrib.auth.models import AbstractUser
 
+class CustomUserAccount(AbstractUser):
+    is_ops_user = models.BooleanField(default=False)
 
-class CustomUser(AbstractUser):
-    ROLE_CHOICES = (
-        ('ops', 'Operations User'),
-        ('client', 'Client User'),
-    )
-    role = models.CharField(max_length=10, choices=ROLE_CHOICES)
-
+    # Set related_name to avoid conflicts
     groups = models.ManyToManyField(
-        'auth.Group',
-        related_name='file_sharing_app_users',
-        blank=True
+        Group,
+        related_name='custom_user_set',
+        blank=True,
+        help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.',
+        related_query_name='custom_user',
     )
     user_permissions = models.ManyToManyField(
-        'auth.Permission',
-        related_name='file_sharing_app_user_permissions',
-        blank=True
+        Permission,
+        related_name='custom_user_set',
+        blank=True,
+        help_text='Specific permissions for this user.',
+        related_query_name='custom_user',
     )
+
+class File(models.Model):
+    uploaded_by = models.ForeignKey(CustomUserAccount, on_delete=models.CASCADE)
+    file = models.FileField(upload_to='files/')
+    file_type = models.CharField(max_length=10, choices=[('pptx', 'PPTX'), ('docx', 'DOCX'), ('xlsx', 'XLSX')])
